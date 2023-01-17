@@ -22,7 +22,17 @@ public class Router {
         return this;
     }
 
+    public Router get(String path, Middleware middleware) {
+        registeredMiddlewares.add(new Servlet(HttpMethod.GET, middleware));
+        return this;
+    }
+
     public Router post(Middleware middleware) {
+        registeredMiddlewares.add(new Servlet(HttpMethod.POST, middleware));
+        return this;
+    }
+
+    public Router post(String path, Middleware middleware) {
         registeredMiddlewares.add(new Servlet(HttpMethod.POST, middleware));
         return this;
     }
@@ -32,7 +42,17 @@ public class Router {
         return this;
     }
 
+    public Router put(String path, Middleware middleware) {
+        registeredMiddlewares.add(new Servlet(HttpMethod.PUT, middleware));
+        return this;
+    }
+
     public Router delete(Middleware middleware) {
+        registeredMiddlewares.add(new Servlet(HttpMethod.DELETE, middleware));
+        return this;
+    }
+
+    public Router delete(String path, Middleware middleware) {
         registeredMiddlewares.add(new Servlet(HttpMethod.DELETE, middleware));
         return this;
     }

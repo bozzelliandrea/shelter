@@ -6,8 +6,7 @@ import org.shelter.core.http.HttpHeader;
 import org.shelter.core.http.HttpStatus;
 import org.shelter.core.http.MediaType;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 public class Response {
 
@@ -55,6 +54,25 @@ public class Response {
         try {
             length = content.length;
             body.write(content);
+            send();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        send();
+    }
+
+    public <T extends Serializable> void send(T content) {
+        if (closed) return;
+
+        try {
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(content);
+            byte[] bytes = bos.toByteArray();
+
+            length = bytes.length;
+            body.write(bytes);
             send();
         } catch (IOException e) {
             e.printStackTrace();
