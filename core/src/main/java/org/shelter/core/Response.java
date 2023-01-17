@@ -18,7 +18,6 @@ public class Response {
     private int code = HttpStatus.OK.value();
     private int length = 0;
     private boolean closed = false;
-    private String contentType = MediaType.TEXT_PLAIN;
 
     public Response(HttpExchange exchange) {
         this.exchange = exchange;
@@ -73,7 +72,7 @@ public class Response {
     public void sendHeaders() {
         try {
             if (!this.headers.containsKey(HttpHeader.CONTENT_TYPE)) {
-                this.headers.add(HttpHeader.CONTENT_TYPE, contentType);
+                this.headers.add(HttpHeader.CONTENT_TYPE, MediaType.TEXT_PLAIN);
             }
 
             this.exchange.sendResponseHeaders(code, length);
